@@ -1,0 +1,886 @@
+/* =========================================
+   1. REGISTRO DE FUENTES (fonts)
+   ========================================= */
+@font-face {
+    font-family: 'Gilroy';
+    src: url('fonts/Gilroy-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    src: url('fonts/Gilroy-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Gilroy';
+    src: url('fonts/Gilroy-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Novecento';
+    src: url('fonts/Novecento WideBold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Novecento';
+    src: url('fonts/Novecento WideNormal.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* =========================================
+   2. VARIABLES Y CONFIGURACIÓN BASE
+   ========================================= */
+:root {
+    --rojo: #AE192D;
+    --rojo2: #e3192d; 
+    --verde: #009885;  
+    --verde2: #0d8172;
+    --rosado: #c90166; 
+    --rosado2: #fc65b0;
+    --gris-fondo: #dfdbd6;
+    --blanco: #ffffff;
+    --negro: #000000;
+}
+
+body {
+    font-family: 'Gilroy', sans-serif;
+    font-weight: 700; 
+    margin: 0;
+    background-color: var(--blanco); 
+    color: #333;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1; 
+    
+    /* =========================================================================
+       EL TRUCO: Degradado lineal aplicado directamente sobre el SVG
+       ========================================================================= */
+    /* Capa 1 (Arriba): Un gradiente blanco que se vuelve transparente.
+       Capa 2 (Abajo): Tu patrón de mosaico de corazones. */
+    background-image: linear-gradient(to bottom, rgb(155, 154, 154) 0%, rgba(136, 136, 136, 0) 100%),
+                      url('img/corazones1.svg');
+                      
+    /* El primer valor controla el degradado (no se repite), el segundo el SVG (se repite en mosaico) */
+    background-repeat: no-repeat, repeat; 
+    background-position: center center, center center; 
+    background-size: 100% 100%, auto; 
+    
+    /* Subimos la opacidad base a 0.25 porque el degradado se encargará de 
+       atenuar el fondo de forma natural conforme el usuario hace scroll */
+    opacity: 0.1; 
+    
+    /* Tu filtro original intacto para mantener el verde institucional */
+    filter: brightness(0) saturate(0%) invert(41%) sepia(84%) saturate(0%) hue-rotate(152deg) brightness(96%) contrast(101%);
+    pointer-events: none; 
+}
+
+/* =========================================
+   3. ENCABEZADO OPTIMIZADO (Header & Banner)
+   ========================================= */
+.main-header {
+    background-color: var(--blanco);
+    width: 100%;
+    position: relative;
+}
+
+.top-bar {
+    background: linear-gradient(to bottom, 
+                    #0d0d0d 0%, 
+                    #1f1d1d 50%, 
+                    #0d0d0d 100%);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 40px;
+    font-size: 0.85rem;
+    max-width: 100%;
+}
+
+.url-sitio {
+    color: var(--blanco);
+    text-decoration: none;
+    font-weight: normal;
+    font-family: 'Gilroy', sans-serif;
+    letter-spacing: 0.5px;
+    
+    /* Mantenemos tu alineación flex */
+    display: inline-flex;
+    align-items: center;
+    gap: -10px; 
+}
+
+/* =========================================================================
+   INYECCIÓN BASE DEL ISOTIPO JAMACHULEL
+   ========================================================================= */
+.url-sitio::before {
+    content: '';
+    display: inline-block;
+    
+    /* Dimensiones con el tamaño ideal para escritorio */
+    width: 20px;  
+    height: 20px;
+    
+    /* Ruta del SVG */
+    background-image: url('img/jamachulel-blanco.svg'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    
+    /* Margen estricto a la derecha para que quede pegadito al texto */
+    margin-right: 6px; 
+}
+
+
+.banner-container {
+    width: 100%;        
+    height: 180px;      
+    position: relative; 
+    overflow: hidden;   
+    background-color: var(--blanco); 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+.banner-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 45%; 
+    height: 100%;
+    z-index: 1; 
+    background-image: url('img/escudo-chiapas-delineado-marca-de-agua.svg');
+    background-position: left center; 
+    background-repeat: no-repeat;
+    background-size: auto 100%; 
+    opacity: 0.10; 
+    pointer-events: none; 
+}
+
+.logo-container {
+    position: relative;
+    z-index: 3; 
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    height: 100%;
+    flex-shrink: 0; 
+    animation: entradaDramatica 4s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
+}
+
+.escudo-chiapas img {
+    height: 130px; 
+    width: auto;
+}
+
+.logo-humanismo img {
+    height: 120px;
+    width: auto;
+}
+
+.header-titles {
+    flex-grow: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    text-align: center;
+    position: relative; 
+    z-index: 2; 
+    margin-left: 40px;
+
+    /* ESCUDO CONTRA ENCIMAMIENTOS: Le damos 100px de espacio libre a la izquierda. 
+       Esto garantiza que el texto "PÁNELES DE CONTROL" nunca toque el difuminado */
+    padding: 0 40px 0 100px; 
+    box-sizing: border-box;
+}
+
+/* =========================================================================
+   CORTINA DE TRANSICIÓN INTEGRADA A LOS TÍTULOS (SIN ANIMACIÓN)
+   ========================================================================= */
+.header-titles::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    
+    /* Lo alineamos justo en el inicio izquierdo de la caja de títulos (coincidiendo con su ::after) */
+    left: 0px; 
+    
+    width: 60px; /* Ancho de la cortina difuminada */
+    height: 100%;
+    z-index: 1; /* Arriba del tramado oscuro, abajo de las letras */
+    
+    background-image: url('img/difuminado.svg');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: left center;
+    
+    pointer-events: none; 
+}
+
+.header-titles::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 20px; 
+    right: -40px; 
+    height: 100%;
+    z-index: -1; 
+    background-image: linear-gradient(to top, #131313 0%, rgba(0, 0, 0, 0) 100%),
+                      url('img/patrones-prehispanicos2.svg');
+    background-repeat: no-repeat, repeat-x; 
+    background-position: center center, right center; 
+    background-size: 100% 100%, auto 100%;  
+    opacity: 0.98;  
+    filter: brightness(0.8) hue-rotate(152deg) brightness(90%) contrast(85%);
+    pointer-events: none; 
+}
+
+.header-titles h2 {
+    font-family: 'Novecento', sans-serif;
+    font-weight: bold;
+    color: var(--rojo); 
+    font-size: 3.2rem; 
+    letter-spacing: 2px;
+    margin: 0 0 5px 0;
+    opacity: 0;
+    animation: entradaDramatica 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    animation-delay: 0.2s; 
+}
+
+.header-titles .page-subtitle {
+    font-family: 'Gilroy', sans-serif;
+    font-weight: bold;
+    color: #ffffff;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    margin: 0;
+    opacity: 0;
+    animation: entradaDramatica 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    animation-delay: 0.6s; 
+}
+
+.franja-roja-tramada {
+    width: 100%;
+    height: 60px; 
+    background-color: var(--rojo2);
+    position: relative;
+    overflow: hidden;
+    z-index: 10;
+    box-shadow: 0 1.8px 4px rgba(0,0,0,0.3);
+}
+
+.franja-roja-tramada::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('img/tira-de-corazones1.svg'); 
+    background-repeat: repeat-x;
+    background-position: center center;
+    background-size: 50px 100%;
+    pointer-events: none;
+}
+/* Forzar manita en elementos interactivos del encabezado */
+.search-box input,
+.url-sitio,
+.footer-column a {
+    cursor: pointer;
+}
+
+/* =========================================
+   4. ARQUITECTURA DE FILAS HORIZONTALES (UI/UX)
+   ========================================= */
+.container {
+    max-width: 1200px; 
+    margin: 0 auto;
+    padding: 0 40px; 
+    box-sizing: border-box;
+}
+
+.dashboard-section {
+    width: 100%;
+    position: relative;
+    margin-bottom: 80px; 
+}
+
+.dashboard-section + .dashboard-section {
+    border-top: 8px solid var(--rojo);
+    padding-top: 50px;
+}
+
+.section-title {
+    font-family: 'Novecento', sans-serif;
+    font-size: 1.8rem;
+    color: var(--rojo);
+    text-align: center;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+}
+
+.paneles-row {
+    display: flex;
+    justify-content: center; 
+    align-items: stretch;    
+    gap: 25px;               
+    flex-wrap: wrap;         
+    width: 100%;
+}
+
+.dynamic-flex .card {
+    flex: 1 1 calc(25% - 25px);
+    min-width: 240px;
+    max-width: 280px; 
+}
+
+.horizontal-row .card-png-only {
+    flex: 1 1 calc(50% - 25px);
+    min-width: 340px;
+    max-width: 535px; 
+    display: flex;
+    cursor: pointer;
+}
+
+.card-png-only img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    border-radius: 25px;
+    border: 1px solid rgba(0, 152, 133, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.card-png-only img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 24px rgba(197, 78, 78, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border:1px solid var(--rojo);
+  
+    
+}
+
+/* Estructura Base unificada de las Tarjetas */
+.card {
+    background-color: var(--blanco);
+    transform: translateY(0); 
+    padding: 30px 25px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 152, 133, 0.15); 
+    overflow: hidden; 
+    isolation: isolate; 
+    
+    /* =========================================================================
+       CALIBRACIÓN DE ALINEACIÓN SUPERIOR (MOCKUP GUÍA)
+       ========================================================================= */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Forzamos a que todo el contenido "escupe" y nazca desde arriba */
+    
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+                box-shadow 0.3s ease,
+                border-color 0.3s ease,
+                opacity 0.8s ease-out; 
+    position: relative; 
+    z-index: 1;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+/* El brinco estándar limpio sin duplicaciones peligrosas */
+.card:hover {
+    transform: translateY(-8px) !important; 
+    box-shadow: 0 12px 24px rgba(0, 152, 133, 0.2) !important; 
+    border: 1px solid var(--verde);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    z-index: -1; 
+    opacity: 0.35; 
+    background: linear-gradient(230deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.99) 100%),
+                url('img/cuadro-cruz1.svg');
+    background-repeat: no-repeat, repeat; 
+    background-position: center center, center center; 
+    background-size: auto, 40px;     
+    pointer-events: none;     
+}
+
+.card-icon img {
+    width: 90px;      
+    height: 90px;     
+    object-fit: contain; 
+    margin: 0 auto !important; /* Limpieza estricta de márgenes laterales y verticales del gráfico */
+    display: block;
+}
+
+.card h3 {
+    font-family: 'Gilroy', sans-serif;
+    font-weight: bold;
+    color: var(--verde); 
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    
+    /* =========================================================================
+       CALIBRACIÓN TIPOGRÁFICA DE DISTANCIAS
+       ========================================================================= */
+    /* 20px exactos de separación con el borde inferior del ícono, 
+       y 10px exactos hacia abajo con el párrafo (subtítulo) */
+    margin: 20px 0 10px 0 !important; 
+    padding: 0 !important;
+    line-height: 1.2;
+}
+
+.card p {
+    font-size: 1.2rem;
+    color: #333333;
+    line-height: 1.4;
+    
+    /* Forzamos a que la primera línea nazca inmediatamente a los 10px decretados por el H3 */
+    margin: 0 !important; 
+    padding: 0 !important;
+}
+
+/* ==========================================================
+   ESTILO PERSONALIZADO EXCLUSIVO PARA LA SECCIÓN MONITORES
+   ========================================================== */
+.monitores-flex .card {
+    flex: 1 1 calc(20% - 25px); 
+    min-width: 200px;
+    max-width: 240px;
+    
+    background-color: #f4f7f6 !important; 
+    background: linear-gradient(rgba(244, 247, 246, 0.93), rgba(244, 247, 246, 0.98)), url('img/corazones1.svg') !important; 
+    background-repeat: repeat !important;
+    background-size: 100px !important;
+    border: 1px solid rgba(0, 152, 133, 0.15) !important; 
+}
+
+.monitores-flex .card::before {
+    display: none !important; 
+}
+
+.monitores-flex .card:hover {
+    transform: translateY(-8px) !important;
+    background-color: var(--blanco) !important; 
+    box-shadow: 0 12px 24px rgba(216, 24, 114, 0.281) !important; 
+    border-color: var(--rosado2) !important;
+}
+
+.monitores-flex .card h3 {
+    color: #333333; 
+    font-size: 1.1rem; 
+}
+/* =========================================
+   5. PIE DE PÁGINA (Footer)
+   ========================================= */
+.main-footer {
+    background-color: var(--verde);
+    color: var(--blanco);
+    padding: 40px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.3);
+    position: relative; 
+    overflow: hidden;   
+    z-index: 1;
+} 
+
+
+.main-footer::after {
+    /* ... tus propiedades iniciales de content, position, opacity y filter se quedan EXACTAMENTE igual ... */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;  
+    z-index: -1;
+    opacity: 0.2;
+    filter: brightness(0); 
+
+    /* =========================================================================
+       EL AJUSTE DE ANCLAJE FIJO (CORREGIDO)
+       ========================================================================= */
+    /* Mantenemos el degradado lineal en la primera capa y tu SVG en la segunda */
+    background: linear-gradient(45deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%),
+                url('img/jamachulel.svg') !important;
+                
+    background-repeat: no-repeat, no-repeat !important;
+    
+    /* ANCLAJE ESTRICTO: Lo obligamos a quedarse pegado a la izquierda (left) 
+       y centrado verticalmente (center) sin importar el cambio de renglones */
+    background-position: right center, right center !important;
+    
+    /* DIMENSIONES INDEPENDIENTES: 'auto' para el degradado. 
+       Para el SVG le decimos que use 'auto' en su ancho y forzamos a que mida 
+       exactamente el 90% del alto del footer. Así, si el footer crece hacia abajo, 
+       la imagen crece proporcionalmente en su lugar sin desalinearse ni brincar */
+    background-size: auto, auto 130% !important; 
+    
+    pointer-events: none;
+}
+
+
+.footer-column {
+    flex: 1;
+    min-width: 300px;
+    margin: 10px;
+}
+
+.footer-column h4 {
+    font-family: 'Gilroy', sans-serif;
+    font-weight: bold; 
+    margin-bottom: 15px;
+}
+
+.footer-column p, .footer-column a {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: var(--blanco);
+}
+
+.footer-column a {
+    text-decoration: underline;
+}
+
+
+/* =========================================
+   6. ANIMACIÓN FADE-IN (Scroll)
+   ========================================= */
+.paneles-row .card.scroll-fade, 
+.paneles-row .card-png-only.scroll-fade {
+    opacity: 0;
+    transform: scale(0.96) translateY(0);
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), 
+                transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.paneles-row .card.scroll-fade.appear, 
+.paneles-row .card-png-only.scroll-fade.appear {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+}
+
+/* ==========================================================
+   7. RESPONSIVIDAD Y OPTIMIZACIÓN MÓVIL CRÍTICA
+   ========================================================== */
+@media (max-width: 992px) {
+    .banner-container {
+        flex-direction: column; 
+        height: auto; 
+        padding: 25px 0 0 0 !important;
+        gap: 20px;
+        position: relative; 
+    }
+
+    .banner-container::before {
+        display: none; 
+    }
+
+    .banner-container::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 145px; 
+        z-index: 1; 
+        background-image: url('img/escudo-chiapas-delineado-marca-de-agua-thin.svg');
+        background-position: center center; 
+        background-repeat: no-repeat;       
+        background-size: 100% auto; 
+        opacity: 0.15; 
+        pointer-events: none;
+    }
+
+    .logo-container {
+        flex-direction: row !important; 
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        padding: 0 20px;
+        gap: 20px;
+        position: relative;
+        z-index: 3; 
+    }
+
+    .escudo-chiapas img { height: 95px; }
+    .logo-humanismo img { height: 85px; }
+
+    .header-titles {
+        margin-left: 0; 
+        width: 100%;
+        padding: 25px 20px !important; 
+        box-sizing: border-box;
+        position: relative;
+        z-index: 3;
+        background-color: var(--blanco); 
+    }
+
+    .header-titles::after {
+        right: 0 !important; /* Forzamos a que muera en el borde derecho exacto */
+        left: 0;
+        width: 100%;
+        background-position: center center; 
+    }
+    .header-titles::before {
+        display: none !important; /* Apagamos la cortina difuminada */
+    }
+
+    .header-titles h2 { 
+        font-size: 2rem; 
+    }
+    .header-titles .page-subtitle { 
+        font-size: 1.1rem; 
+    }
+
+    .dynamic-flex .card {
+        flex: 1 1 calc(50% - 25px);
+        max-width: 100%;
+    }
+    
+    .horizontal-row .card-png-only {
+        flex: 1 1 calc(50% - 25px);
+        min-width: 340px;
+        max-width: 535px;
+        display: flex;
+        transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease; 
+        border-radius: 8px;
+    }
+
+    .horizontal-row .card-png-only:hover {
+        transform: translateY(-8px); 
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12); 
+    }
+
+    .card-png-only img:hover {
+        transform: none; 
+    }
+
+    .monitores-flex .card {
+        flex: 1 1 calc(50% - 25px); 
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 20px;
+    }
+    
+    /* 1. Cambiamos el flujo horizontal a vertical para que la URL se posicione 
+          estrictamente ARRIBA y la barra de buscar se centre ABAJO sin empujones */
+    .top-bar {
+        flex-direction: column !important;
+        gap: 12px !important; /* Espaciado balanceado entre la URL y el buscador */
+        padding: 12px 15px !important;
+        text-align: center !important;
+        align-items: center !important; 
+    }
+    
+    /* 2. Forzamos a que el enlace ocupe el ancho y distribuya su contenido al centro */
+    .url-sitio {
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+    }
+
+    /* 3. Inyección y calibración estricta del isotipo Jamachulel */
+    .url-sitio::before {
+        content: '';
+        display: inline-block !important;
+        width: 22px !important;  /* Mayor tamaño solicitado */
+        height: 22px !important; /* Mayor tamaño solicitado */
+        background-image: url('img/jamachulel-blanco.svg') !important; 
+        background-size: contain !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        margin-right: 4px !important; /* Pegadito al texto */
+    }
+
+    /* 4. Centramos el contenedor del buscador y su input */
+    .search-box {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    .search-box input {
+        width: 100% !important;
+        max-width: 180px !important; /* Mantiene tu tamaño estético original */
+        margin: 0 auto !important;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-container::after {
+        height: 125px; 
+    }
+
+    .paneles-row {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding: 0;
+    }
+    
+    .logo-container {
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 15px !important;
+        width: 100%;
+    }
+
+    .escudo-chiapas img { height: 75px !important; }
+    .logo-humanismo img { height: 65px !important; }
+
+    .header-titles {
+        padding: 20px 15px !important;
+    }
+
+    .header-titles h2 { 
+        font-size: 1.4rem !important; 
+        letter-spacing: 1px;
+        line-height: 1.2;
+    }
+    
+    .header-titles .page-subtitle { 
+        font-size: 0.85rem !important; 
+        line-height: 1.3;
+    }
+
+    .section-title {
+        font-size: 1.25rem !important;
+        padding: 0 10px;
+    }
+
+    /* =========================================================================
+       RECALIBRACIÓN DE LAS TARJETAS ESTÁNDAR
+       ========================================================================= */
+    .card, .monitores-flex .card {
+        width: 100% !important;
+        max-width: calc(100% - 20px) !important; 
+        margin: 0 auto 20px auto !important;
+        padding: 22px 20px !important;
+        box-sizing: border-box !important; 
+    }
+
+    .card-icon img {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 10px;
+    }
+
+    .card h3 { font-size: 1.3rem; }
+    .card p { font-size: 0.95rem; }
+
+    /* =========================================================================
+       SOLUCIÓN DE REDIMENSIÓN ESTRICTA PARA TARJETAS PNG (SIESE / CEIEG)
+       ========================================================================= */
+    /* Desactivamos por completo las dimensiones rígidas de escritorio */
+    .horizontal-row .card-png-only {
+        display: block !important; 
+        width: 100% !important;
+        max-width: calc(100% - 20px) !important; /* Mismo ancho responsivo que las .card normales */
+        min-width: 0 !important; /* ¡CRÍTICO! Rompemos los 344px que causaban el desborde */
+        height: auto !important; 
+        margin: 0 auto 20px auto !important;
+        padding: 0 !important; 
+        box-sizing: border-box !important;
+    }
+
+    /* Forzamos a la etiqueta img interna a encogerse elásticamente */
+    .horizontal-row .card-png-only img {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto !important; 
+        display: block !important;
+        border-radius: 8px !important; /* Mantiene la estética curveada de tus cajas */
+    }
+
+    /* =========================================================================
+       RECALIBRACIÓN POR RECORTE LIMPIO (Franja Roja)
+       ========================================================================= */
+    .franja-roja-tramada { 
+        height: 35px !important; 
+        overflow: hidden !important;
+    }
+
+    .franja-roja-tramada::after {
+        background-size: auto 60px !important; 
+        background-position: center top !important;
+    }
+     
+    .footer-column {
+        text-align: center;
+        min-width: 100%;
+    }
+
+    /* INYECTAMOS EL CENTRADO RESPONSIVO DEL PATRÓN DEL FOOTER */
+    .main-footer::after {
+        background-position: center center, center center !important;
+        background-size: auto, auto 85% !important; 
+        opacity: 0.15 !important; 
+    }
+
+    /* =========================================================================
+       BLINDAJE DE ESTRUCTURA GENERAL
+       ========================================================================= */
+    html, body {
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+    
+}/* Cierre estructural estricto de la media query */
+
+/* =========================================
+   ANIMACIÓN DE ENTRADA DRAMÁTICA (CSS Puro)
+   ========================================= */
+@keyframes entradaDramatica {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Nace 20px más abajo */
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Sube a su posición original */
+    }
+}
