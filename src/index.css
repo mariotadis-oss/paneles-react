@@ -510,6 +510,7 @@ body::before {
     color: var(--blanco);
     padding: 40px 20px;
     display: flex;
+    flex-direction:column;
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 20px;
@@ -518,7 +519,31 @@ body::before {
     overflow: hidden;   
     z-index: 1;
 } 
-
+.footer-title-main {
+    font-family: 'Novecento', sans-serif;
+    font-size: 2rem;
+    color: var(--blanco);
+    margin-bottom: -12px;
+    width: 100%;
+    text-align: left;
+    /* Asegura que quede a la izquierda */
+}
+.footer-content-row {
+    display: flex;
+    flex-direction: row;
+    /* Ponemos las columnas una al lado de la otra */
+    gap: 40px;
+    /* Espacio entre la columna de Contacto y Visítanos */
+    justify-content: flex-start;
+    /* Alineación a la izquierda */
+    width: 100%;
+}
+.footer-column {
+    flex: 1;
+    /* Hace que ambas columnas ocupen el mismo ancho */
+    max-width: 500px;
+    /* Ajusta según lo que necesites */
+}
 
 .main-footer::after {
     /* ... tus propiedades iniciales de content, position, opacity y filter se quedan EXACTAMENTE igual ... */
@@ -560,7 +585,13 @@ body::before {
     min-width: 300px;
     margin: 10px;
 }
-
+.footer_column h5{
+    font-family: 'Gilroy', sans-serif;
+    font-weight: bold; 
+    font-size: 200px;
+    color: var(--blanco);
+    margin-bottom: 15px;
+}
 .footer-column h4 {
     font-family: 'Gilroy', sans-serif;
     font-weight: bold; 
@@ -883,4 +914,18 @@ body::before {
         opacity: 1;
         transform: translateY(0); /* Sube a su posición original */
     }
+}
+/* Corrección de estilos para enlaces en tarjetas */
+.card a {
+    text-decoration: none;
+    /* Elimina el subrayado */
+    color: inherit;
+    /* Evita que el texto se ponga azul y hereda el color original */
+    display: block;
+    /* Asegura que el área de clic sea toda la tarjeta */
+}
+
+/* Opcional: Si quieres evitar que el color cambie al pasar el mouse (hover) */
+.card a:hover {
+    color: inherit;
 }
